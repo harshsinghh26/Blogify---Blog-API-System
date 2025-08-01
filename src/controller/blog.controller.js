@@ -13,12 +13,20 @@ export const createBlog = asyncHandler(async (req, res) => {
     throw new ApiError(400, 'Title and content are required');
   }
 
-  let coverImage, coverImageId;
-  if (req.file?.path) {
-    const upload = await uploadOnCloudinary(req.file.path);
-    coverImage = upload?.url;
-    coverImageId = upload?.public_id;
+  const existingBlog = await Blog.findOne({
+    $and: [{ title }, { author }],
+  });
+
+  if (existingBlog) {
+    throw new ApiError(400, 'Blog already exists');
   }
+
+  // let coverImage, coverImageId;
+  // if (req.file?.path) {
+  //   const upload = await uploadOnCloudinary(req.file.path);
+  //   coverImage = upload?.url;
+  //   coverImageId = upload?.public_id;
+  // }
 
   const blog = await Blog.create({
     title,
@@ -26,8 +34,8 @@ export const createBlog = asyncHandler(async (req, res) => {
     author,
     tags,
     isPublished,
-    coverImage,
-    coverImageId,
+    // coverImage,
+    // coverImageId,
     publishedAt: isPublished ? new Date() : undefined,
   });
 

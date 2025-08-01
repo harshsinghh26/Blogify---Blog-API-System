@@ -19,4 +19,8 @@ import Uaserrouter from './src/routes/user.routes.js';
 
 app.use('/api/v1/users', Uaserrouter);
 
+import Blogrouter from './src/routes/blog.routes.js';
+
+app.use('/api/v1/blogs', Blogrouter);
+
 export default app;

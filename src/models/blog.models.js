@@ -15,12 +15,12 @@ const blogSchema = new Schema(
       ref: 'User',
       required: true,
     },
-    coverImage: {
-      type: String,
-    },
-    coverImageId: {
-      type: String,
-    },
+    // coverImage: {
+    //   type: String,
+    // },
+    // coverImageId: {
+    //   type: String,
+    // },
     tags: [
       {
         type: String,
