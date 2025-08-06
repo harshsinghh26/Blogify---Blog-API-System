@@ -14,7 +14,7 @@ export const createBlog = asyncHandler(async (req, res) => {
   }
 
   const existingBlog = await Blog.findOne({
-    $and: [{ title }, { author }],
+    $or: [{ title }, { author }],
   });
 
   if (existingBlog) {
@@ -46,10 +46,7 @@ export const createBlog = asyncHandler(async (req, res) => {
 
 // Get All Blogs
 export const getAllBlogs = asyncHandler(async (req, res) => {
-  const blogs = await Blog.find().populate(
-    'author',
-    'fullName username avatar',
-  );
+  const blogs = await Blog.find().populate('author', 'fullName username');
   return res
     .status(200)
     .json(new ApiResponse(200, blogs, 'All blogs fetched successfully'));
